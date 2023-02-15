@@ -546,7 +546,7 @@ If you've followed the above steps correctly, your pool's webdashboard is now pr
 
 ### Disable unused webdashboard pages
 
-Change to the `pool` account. Edit `/home/pool/libs/website.js` to have the `pageFiles` array look like below:
+Change to the `pool` account. Edit `/home/pool/s-nomp/libs/website.js` to have the `pageFiles` array look like below:
 
 ```conf
 var pageFiles = {
