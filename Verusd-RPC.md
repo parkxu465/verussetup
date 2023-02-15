@@ -246,7 +246,7 @@ pm2 start httpserver.js --name Verusd-RPC
 Edit your crontab using `crontab -e` and shove in this line at the bottom:
 
 ```crontab
-@reboot /bin/sleep 300 && cd /home/verusd-rpc/verusd-rpc && /usr/bin/pm2 httpserver.js --name verusd-rpc
+@reboot /bin/sleep 300 && cd /home/verusd-rpc/verusd-rpc && /usr/bin/pm2 start httpserver.js --name verusd-rpc
 ```
 
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
