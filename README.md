@@ -1,6 +1,6 @@
 # Verus How-To Documents
 
-  * [Verusd-RPC] (Verusd-RPC.md)
+  * [Verusd-RPC](Verusd-RPC.md)
   * [ElectrumX](ElectrumX.md) *soon to be deprecated*
   * [S-NOMP](S-NOMP.md)
   * [S-NOMP Alternate setup](S-NOMP-alternate-setup.md)
