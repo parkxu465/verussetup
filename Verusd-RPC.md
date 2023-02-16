@@ -192,7 +192,6 @@ Change to the resulting directory and create a symlink like below.
 ```bash
 cd /home/verusd-rpc/.nvm/versions/node/v18.14.0/bin/
 ln -s node nodejs
-exit
 ```
 
 ## verusd-rpc
@@ -231,7 +230,7 @@ Exit and save on the way out.
 Optional, but recommended:
 	testrun `Verusd-RPC` with node:
 	```bash
-	node /home/verus/verusd-rpc/httpserver.js
+	node httpserver.js
 	```
 	Now locally test the functionality in a 2nd terminal on the same system (doesn't matter what user account):
 	```bash
