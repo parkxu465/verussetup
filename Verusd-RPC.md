@@ -21,9 +21,9 @@ apt -y upgrade
 apt -y install libgomp1 git libboost-all-dev libsodium-dev build-essential
 ```
 
-## Poolwallet
+## Verus Daemon
 
-Create a user for the poolwallet, switch to that account:
+Create a user for the Verus daemon, switch to that account:
 
 ```bash
 useradd -m -d /home/verus -s /bin/bash verus
@@ -33,10 +33,12 @@ su - verus
 Download the **latest** (`v0.9.6-1` used in this example) Verus binaries from the [GitHub Releases Page](https://github.com/VerusCoin/VerusCoin/releases). Unpack, move them into place and clean up like so:
 
 ```bash
+mkdir ~/bin
+cd ~/bin
 wget https://github.com/VerusCoin/VerusCoin/releases/download/v0.9.6-1/Verus-CLI-Linux-v0.9.6-1-x86_64.tgz
-tar xf Verus-CLI-Linux-v0.9.6-1-x86-64.tgz; tar xf Verus-CLI-Linux-v0.9.6-1-x86-64.tar.gz
+tar xf Verus-CLI-Linux-v0.9.6-1-x86_64.tgz; tar xf Verus-CLI-Linux-v0.9.6-1-x86_64.tar.gz
 mv verus-cli/{fetch-params,fetch-bootstrap,verusd,verus} ~/bin
-rm -rf verus-cli Verus-CLI-Linux-v0.9.6-1-x86-64.t*
+rm -rf verus-cli Verus-CLI-Linux-v0.9.6-1-x86_64.t*
 ```
 
 Use the supplied script to download a copy of the `zcparams` data. Watch for and fix any occuring errors until you can be sure you successfully have gotten a complete `zcparams` copy.
@@ -51,6 +53,8 @@ Since this node will be running with all indexes enabled, it will need to be syn
 Now, let's create the data and wallet export directory. Then, get the bootstrap and unpack it there.
 
 ```bash
+mkdir ~/.komodo
+mkdir ~/.komodo/VRSC
 mkdir ~/export
 ```
 
@@ -87,7 +91,7 @@ disablewallet=1
 insightexplorer=1
 idindex=1
 txindex=1
-addressindex1
+addressindex=1
 timestampindex=1
 spentindex=1
 
@@ -129,7 +133,7 @@ addnode=65.21.63.161:27485
 # EOF
 ```
 
-Afterwards, start the verus daemon and let it sync the blockchain. We'll also watch the debug log for a moment:
+Afterwards, start the verus daemon and let it sync the blockchain. as noted before, the indexes require a full synchronization from genesis, so this make take many hours. We'll also watch the debug log for a moment:
 
 ```bash
 cd ~/.komodo/VRSC; verusd -daemon 1>/dev/null 2>&1; sleep 1; tail -f debug.log
@@ -153,9 +157,9 @@ When it has synced up to height, the `blocks` and `longestchain` values will be 
 
 Create a new user account to run the pool from. Switch to that user to setup `nvm.sh`:
 
-Instal `nvm`:
+Instal `nvm`. As root user, do:
 ```bash
-useradd -m -d /home/verus-rpc -s /bin/bash verus-rpc
+useradd -m -d /home/verusd-rpc -s /bin/bash verusd-rpc
 su - verusd-rpc
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 exit
