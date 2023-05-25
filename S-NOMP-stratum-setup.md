@@ -373,7 +373,7 @@ To determine the location of your `node` binary, switch to user `pool`, do this 
 
 ```bash
 which node
-/home/pool/.nvm/versions/node/v8.17.0/bin/node
+/home/pool/.nvm/versions/node/v10.24.1/bin/node
 ```
 
 Switch back to user `verus` and edit `~/.komodo/VRSC/VRSC.conf` to enable the blocknotify command as seen below, using the location you just got from using `which node` before:
