@@ -196,7 +196,7 @@ ln -s node nodejs
 
 ## verusd-rpc
 
-(still in the `verusd-rpc` account) clone the *verusd-rpc* code:
+(still in the `verusd-rpc` account, home directory) clone the *verusd-rpc* code:
 ```bash
 git clone https://github.com/VerusCoin/bitcoind-rpc.git verusd-rpc
 ```
@@ -249,7 +249,7 @@ pm2 start httpserver.js --name Verusd-RPC
 Edit your crontab using `crontab -e` and shove in this line at the bottom:
 
 ```crontab
-@reboot /bin/sleep 300 && cd /home/verusd-rpc/verusd-rpc && /usr/bin/pm2 start httpserver.js --name verusd-rpc
+@reboot /bin/sleep 300 && cd /home/verusd-rpc/verusd-rpc && /home/verusd-rpc/.nvm/versions/node/v18.14.0/bin/pm2 start httpserver.js --name verusd-rpc
 ```
 
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
