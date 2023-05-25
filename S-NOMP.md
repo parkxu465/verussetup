@@ -372,7 +372,7 @@ which node
 Switch back to user `verus` and edit `~/.komodo/VRSC/VRSC.conf` to enable the blocknotify command as seen below, using the location you just got from using `which node` before:
 
 ```conf
-blocknotify=/home/pool/.nvm/versions/node/v8.16.1/bin/node /home/pool/s-nomp/scripts/cli.js blocknotify verus %s
+blocknotify=/home/pool/.nvm/versions/node/v10.24.1/bin/node /home/pool/s-nomp/scripts/cli.js blocknotify verus %s
 ```
 also change in this setting (remove the `#` that is in front of it!!!), to reflect your own dee address and mining address you used in the s-Nomp config with their respective percentages:
 ```conf
