@@ -306,8 +306,7 @@ cd s-nomp
 Next, install all dependencies using `npm`:
 
 ```bash
-npm update
-npm install
+npm ci
 ```
 
 ## Configuration Instructions
