@@ -42,7 +42,7 @@ useradd -m -d /home/verus -s /bin/bash verus
 su - verus
 ```
 
-Download the **latest** (`v0.9.3` used in this example) Verus binaries from the [GitHub Releases Page](https://github.com/VerusCoin/VerusCoin/releases), unpack, move them into place and clean up like so:
+Download the **latest** Verus binaries from the [GitHub Releases Page](https://github.com/VerusCoin/VerusCoin/releases) and install them like so:
 
 ```bash
 mkdir ~/bin
@@ -91,6 +91,13 @@ rpcallowip=127.0.0.1
 rpcthreads=256
 rpcworkqueue=1024
 
+## mining options
+mint=1
+gen=1
+genproclimit=0
+minetolocalwallet=0
+# miningdistribution={"<FEE-ADDRESS>":0.05,"<MINING-ADDRESS>":0.95}
+
 # logging options
 logtimestamps=1
 logips=1
@@ -116,10 +123,10 @@ debug=rand
 debug=reindex
 #debug=rpc
 debug=selectcoins
-debug=tor
+#debug=tor
 #debug=zmq
-debug=zrpc
-debug=zrpcunsafe
+#debug=zrpc
+#debug=zrpcunsafe
 
 # miscellaneous options
 banscore=64
@@ -143,8 +150,6 @@ seednode=45.79.111.201:27485
 seednode=45.79.237.198:27485
 seednode=172.104.48.148:27485
 seednode=66.228.59.168:27485
-# old seednode
-seednode=95.216.104.210:27485
 
 ## addnodes
 # vrsc0..1
@@ -290,10 +295,10 @@ Create a new user account to run the pool from. Switch to that user to setup `nv
 
 ```bash
 useradd -m -d /home/pool -s /bin/bash pool
-usermod -a -g keydb pool
-chown -R keydb:pool /var/run/keydb
+usermod -g pool redis
+chown -R redis:pool /var/run/redis
 su - pool
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
 Log out and back in to activate `nvm.sh`
@@ -303,12 +308,12 @@ exit
 su - pool
 ```
 
-Now, install `NodeJS v8` via `nvm.sh` as well as [PM2](http://pm2.keymetrics.io) via `npm`.   
-**NOTE:** Node v10 or higher won't work. You _will_ have to use Node v8!
+Now, install `NodeJS v10` via `nvm.sh` as well as `redis-commander` and [PM2](http://pm2.keymetrics.io) via `npm`.   
+**NOTE:** Node v11 or higher won't work. You _will_ have to use Node v10!
 **NOTE:** PM2 v5.0.0 or higher won't work. You _will_ have to use PM2 v4.5.6!
 
 ```bash
-nvm install 8
+nvm install 10
 npm install -g pm2@4.5.6
 ```
 
@@ -316,13 +321,13 @@ Because `nvm.sh` comes without it, we need to add one symlink into its bindir fo
 
 ```bash
 which node
-/home/pool/.nvm/versions/node/v8.17.0/bin/node
+/home/pool/.nvm/versions/node/v10.24.1/bin/node
 ```
 
 Change to the resulting directory and create a symlink like below.
 
 ```bash
-cd /home/pool/.nvm/versions/node/v8.17.0/bin
+cd /home/pool/.nvm/versions/node/v10.24.1/bin
 ln -s node nodejs
 exit
 ```
@@ -340,8 +345,7 @@ cd s-nomp
 Next, install all dependencies using `npm`:
 
 ```bash
-npm update
-npm install
+npm ci
 ```
 
 ## Configuration Instructions
@@ -406,7 +410,11 @@ which node
 Switch back to user `verus` and edit `~/.komodo/VRSC/VRSC.conf` to enable the blocknotify command as seen below, using the location you just got from using `which node` before:
 
 ```conf
-blocknotify=/home/pool/.nvm/versions/node/v8.17.0/bin/node /home/pool/s-nomp/scripts/cli.js blocknotify verus %s
+blocknotify=/home/pool/.nvm/versions/node/v10.24.1/bin/node /home/pool/s-nomp/scripts/cli.js blocknotify verus %s
+```
+also change in this setting (remove the `#` that is in front of it!!!), to reflect your own dee address and mining address you used in the s-Nomp config with their respective percentages:
+```conf
+miningdistribution={"FEE-ADDRESS":0.05,"<MINING-ADDRESS>":0.95}
 ```
 
 *Alternative to running the blocknotify script through node*:
