@@ -590,6 +590,7 @@ npm install
 npm link
 ```
 ```bash
+cd ..
 npm link blake2b
 ```
 ```bash
