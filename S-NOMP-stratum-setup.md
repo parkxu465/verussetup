@@ -253,6 +253,12 @@ EOX
 ```bash
 chmod +x /home/verus/bin/start-daemon
 ```
+```bash
+cp /home/verus/bin/start-daemon /home/verus/bin/restart-daemon
+```
+```bash
+nano /home/verus/bin/restart-daemon
+```
 create a restart script `restart-daemon`:
 ```bash
 #!/bin/bash
@@ -287,7 +293,7 @@ chmod +x /home/verus/bin/restart-daemon
 ```
 
 ## Server performance settings
-
+root 窗口：
 Set amount of connections to 1024 (or 65535 if you think you need it) instead of the standard 128:
 
 ```bash
@@ -320,6 +326,8 @@ GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT transparent_hugepage=nev
 Update `GRUB` and reboot.
 ```bash
 update-grub
+```
+```bash
 shutdown -r now
 ```
 Wait for the reboot to finish and log back in as `root`.
@@ -331,9 +339,17 @@ Create a new user account to run the pool from. Switch to that user to setup `nv
 
 ```bash
 useradd -m -d /home/pool -s /bin/bash pool
+```
+```bash
 usermod -g pool redis
+```
+```bash
 chown -R redis:pool /var/run/redis
+```
+```bash
 su - pool
+```
+```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
 
