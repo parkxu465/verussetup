@@ -231,9 +231,9 @@ When it has synced up to height, the `blocks` and `longestchain` values will be 
 ```bash
 crontab -e
 ```
-
-```crontab
 # 下行加入最后一行
+```crontab
+
 @reboot cd /home/verus/.komodo/VRSC; /home/verus/bin/verusd -daemon 1>/dev/null 2>&1
 ```
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
@@ -327,28 +327,40 @@ Update `GRUB` and reboot.
 ```bash
 update-grub
 ```
+# ```bash
+# shutdown -r now
+# ```
+# Wait for the reboot to finish and log back in as `root`.
+安装redis:
 ```bash
-shutdown -r now
+apt -y install redis-server
 ```
-Wait for the reboot to finish and log back in as `root`.
+```bash
+update-rc.d redis-server enable
+```
+```bash
+/etc/init.d/redis-server restart
+```
 
 ## Node.js
 
 Create a new user account to run the pool from. Switch to that user to setup `nvm.sh`:
 
-
-```bash
-useradd -m -d /home/pool -s /bin/bash pool
-```
 ```bash
 usermod -g pool redis
 ```
 ```bash
 chown -R redis:pool /var/run/redis
 ```
+
+切换pool用户：
 ```bash
 su - pool
 ```
+```bash
+cd ~
+```
+
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 ```
@@ -366,6 +378,8 @@ Now, install `NodeJS v10` via `nvm.sh` as well as `redis-commander` and [PM2](ht
 
 ```bash
 nvm install 10
+```
+```bash
 npm install -g pm2@4.5.6
 ```
 
@@ -373,14 +387,19 @@ Because `nvm.sh` comes without it, we need to add one symlink into its bindir fo
 
 ```bash
 which node
-/home/pool/.nvm/versions/node/v10.24.1/bin/node
 ```
+/home/pool/.nvm/versions/node/v10.24.1/bin/node
+
 
 Change to the resulting directory and create a symlink like below.
 
 ```bash
 cd /home/pool/.nvm/versions/node/v10.24.1/bin
+```
+```bash
 ln -s node nodejs
+```
+```bash
 exit
 ```
 
@@ -390,8 +409,59 @@ Make sure you're in the `pool` account and clone the S-NOMP from our main reposi
 
 ```bash
 su - pool
+```
+```bash
 git clone https://github.com/veruscoin/s-nomp
+```
+```bash
 cd s-nomp
+```
+编辑package-lock.json
+```bash
+nano package-lock.json
+```
+找到blake2b 3处删除
+
+```bash
+git clone https://github.com/holepunchto/b4a.git
+```
+```bash
+git clone https://github.com/emilbayes/blake2b.git
+```
+```bash
+git clone https://github.com/mafintosh/blake2b-wasm.git
+```
+```bash
+cd blake2b-wasm
+npm install
+```
+```bash
+npm link
+```
+```bash
+cd ..
+npm link blake2b-wasm
+```
+```bash
+cd blake2b
+npm install
+```
+```bash
+npm link
+```
+```bash
+cd ..
+npm link blake2b
+```
+cd b4a
+npm install
+```
+```bash
+npm link
+```
+```bash
+cd ..
+npm link b4a
 ```
 
 Next, install all dependencies using `npm`:
