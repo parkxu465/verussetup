@@ -18,18 +18,28 @@ Basically, anything in there that is not a real CPU name _may_ cause NodeJS to b
 
 ```bash
 useradd -m -d /home/verus -s /bin/bash verus
+```
+```bash
 visudo
+```
+```bash
 %sudo   ALL=(ALL:ALL) NOPASSWD:ALL
 verus ALL=(ALL:ALL) NOPASSWD:ALL
 pool ALL=(ALL:ALL) NOPASSWD:ALL
+```
+```bash
 useradd -m -d /home/pool -s /bin/bash pool
 ```
-
-
+```bash
+passwd pool
+```
+```bash
+passwd verus
+```
 
 ## Operating System
 
-This guide is tailored to and tested on `Debian 11 "Bullseye"` but should probably also work on Debian-ish derivatives like `Devuan` or `Ubuntu` and others. Before starting, please install the latest updates and prerequisites.
+root执行：This guide is tailored to and tested on `Debian 11 "Bullseye"` but should probably also work on Debian-ish derivatives like `Devuan` or `Ubuntu` and others. Before starting, please install the latest updates and prerequisites.
 
 ```bash
 echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/keydb.list
@@ -41,10 +51,9 @@ apt -y install libgomp1 git libboost-all-dev libsodium-dev build-essential
 
 ## Poolwallet
 
-Create a user for the poolwallet, switch to that account:
+切换成verus用户:
 
 ```bash
-useradd -m -d /home/verus -s /bin/bash verus
 su - verus
 ```
 
@@ -55,8 +64,14 @@ mkdir ~/bin
 cd ~/bin
 wget https://raw.githubusercontent.com/Oink70/Verus-CLI-tools/main/auto-verus.sh
 chmod +x auto-verus.sh
+sudo apt install jq
 ./auto-verus.sh
 ```
+切换成root,
+```bash
+mkdir /home/verus/export
+```
+
 When the script asks if this is a new installation, answer with `Y` (default). On `Enter blockchain data directory or leave blank for default:` press enter. On the question to install, answered with `1` (default).
 If you installed the updates and prerequisites, the daemon will start in the background.
 Check if it indeed started using `tail -f ~/.komodo/VRSC/debug.log` (`CTRL-C` to exit).
