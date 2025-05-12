@@ -43,9 +43,17 @@ root执行：This guide is tailored to and tested on `Debian 11 "Bullseye"` but 
 
 ```bash
 echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/keydb.list
+```
+```bash
 wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
+```
+```bash
 apt update
+```
+```bash
 apt -y upgrade
+```
+```bash
 apt -y install libgomp1 git libboost-all-dev libsodium-dev build-essential
 ```
 
@@ -61,13 +69,23 @@ Download the **latest** (`v0.9.3` used in this example) Verus binaries from the 
 
 ```bash
 mkdir ~/bin
+```
+```bash
 cd ~/bin
+```
+```bash
 wget https://raw.githubusercontent.com/Oink70/Verus-CLI-tools/main/auto-verus.sh
+```
+```bash
 chmod +x auto-verus.sh
+```
+```bash
 sudo apt install jq
+```
+```bash
 ./auto-verus.sh
 ```
-切换成root,
+新开root登录窗口，建输出目录
 ```bash
 mkdir /home/verus/export
 ```
@@ -78,16 +96,18 @@ Check if it indeed started using `tail -f ~/.komodo/VRSC/debug.log` (`CTRL-C` to
 
 Now, let's create the wallet export directory.
 
-```bash
-mkdir ~/export
-```
+# ```bash
+# mkdir ~/export
+# ```
 
+root窗口：
 It's time to do the wallet config. A reasonably secure `rpcpassword` can be generated using this command:   
 
 ```bash
 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
 ```
 
+verus窗口：
 Edit `~/.komodo/VRSC/VRSC.conf` and include the parameters listed below, adapt the ones that need adaption.
 
 ```conf
@@ -195,7 +215,7 @@ addnode=65.21.63.161:27485
 ```
 
 Afterwards, restart the verus daemon and let it sync the rest of the blockchain. We'll also watch the debug log for a moment:
-
+verus窗口：
 ```bash
 cd ~/.komodo/VRSC; verusd -daemon 1>/dev/null 2>&1; sleep 1; tail -f debug.log
 ```
@@ -206,20 +226,31 @@ Press `ctrl-c` to exit `tail` if it looks alright. To check the status and know 
 verus getinfo
 ```
 
+root窗口：
 When it has synced up to height, the `blocks` and `longestchain` values will be at par. Additionally, you should verify against [the explorer](https://explorer.veruscoin.io) that you are not on a fork. Edit the `crontab` using `crontab -e` and include the line below to autostart the poolwallet:
+```bash
+crontab -e
+```
 
 ```crontab
+# 下行加入最后一行
 @reboot cd /home/verus/.komodo/VRSC; /home/verus/bin/verusd -daemon 1>/dev/null 2>&1
 ```
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
-
+root窗口：
 Create a `start-daemon` script:
 ```bash
 cat << EOX >> /home/verus/bin/start-daemon
+```
+```bash
 #!/bin/bash
 cd /home/verus/.komodo/VRSC; /home/verus/bin/verusd -daemon 1>/dev/null 2>&1
 # EOF
+```
+```bash
 EOX
+```
+```bash
 chmod +x /home/verus/bin/start-daemon
 ```
 create a restart script `restart-daemon`:
