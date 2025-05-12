@@ -353,7 +353,7 @@ usermod -g pool redis
 chown -R redis:pool /var/run/redis
 ```
 
-切换pool用户：
+切换pool用户-----------------------------------------------------------------------------------------------------------------------------
 ```bash
 su - pool
 ```
@@ -453,6 +453,7 @@ npm link
 cd ..
 npm link blake2b
 ```
+```bash
 cd b4a
 npm install
 ```
@@ -477,7 +478,7 @@ First of all, copy the following files from your running S-NOMP pool server and 
 * `/home/pool/s-nomp/coins/vrsc.json`
 * `/home/pool/s-nomp/pool_configs/verus.json`
 * optional if you use the `blocknotify` binary: `/home/pool/s-nomp/scripts/blocknotify`
-
+切换到pool用户-----------------------------------------------------------------------------------------------------------------
 Now, switch to the `pool` account. First, check if the access rights to `/home/pool/s-nomp/config.json` are `pool:pool`.
 Then edit the file to reflect the changes listed below. Obviously fill in the correct IP for your S-NOMP server.
 * `    "website": {`
@@ -505,7 +506,7 @@ Then edit the file to reflect the changes listed below.
 * There are 2 occurences of `user`, `password`, `host` and `port` each. Use the `rpcuser`, `rpcpassword` and `rpcport` values
 
 We are almost done now. Using the command mentioned at the beginning of this document, check if the blockchain has finished syncing. If not, wait for it to complete before continuing.
-
+切换到verus用户------------------------------------------------------------------------------------------------------------------------
 Now switch to the `verus` user, stop the wallet once more.
 
 ```bash
@@ -528,6 +529,26 @@ also change in this setting (remove the `#` that is in front of it!!!), to refle
 ```conf
 miningdistribution={"FEE-ADDRESS":0.05,"<MINING-ADDRESS>":0.95}
 ```
+切换到pool 用户-------------------------------------------------------------------------------------------------------------------------------------
+```bash
+cd s-nomp/scripts
+```
+```bash
+gcc -o blocknotify ./blocknotify.c
+```
+```bash
+chmod +x /home/pool/s-nomp/scripts/blocknotify
+```
+切换到verus用户-------------------------------------------------------------------------------------------------------------------------------------
+```bash
+cd ~/.komodo/VRSC
+```
+```bash
+nano VRSC.conf
+```
+
+
+
 
 *Alternative to running the blocknotify script through node*:
 Compile (on any other machine) the `/home/pool/s-nomp/scripts/blocknotify.c` code, copy the binary to `/home/pool/s-nomp/scripts/blocknotify`, make executable using `chmod +x /home/pool/s-nomp/scripts/blocknotify` and use this line in your `VRSC.conf`:
@@ -559,6 +580,26 @@ pm2 start init.js --name pool
 Use `pm2 log` to check for S-NOMP startup errors.
 
 **warning**: if you have SSL enabled on your public pool, you either need the SSL certificates in the same location on your stratum server or disable any SSL ports in the `/home/pool/s-nomp/pool_configs/verus.json` file
+
+链接blake2b
+```bash
+cd blake2b
+npm install
+```
+```bash
+npm link
+```
+```bash
+npm link blake2b
+```
+```bash
+rm -rf ../.pm2/logs/*
+```
+```bash
+pm2 restart pool
+```
+
+
 
 
 ### S-Nomp Autostart
