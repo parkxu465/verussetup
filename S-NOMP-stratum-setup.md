@@ -59,7 +59,7 @@ apt -y install libgomp1 git libboost-all-dev libsodium-dev build-essential
 
 ## Poolwallet
 
-切换成verus用户:
+切换成verus用户:--------------------------------------------------------------------------------------
 
 ```bash
 su - verus
@@ -85,7 +85,7 @@ sudo apt install jq
 ```bash
 ./auto-verus.sh
 ```
-新开root登录窗口，建输出目录
+新开root登录窗口，建输出目录--------------------------------------------------------------------------
 ```bash
 mkdir /home/verus/export
 ```
@@ -107,9 +107,11 @@ It's time to do the wallet config. A reasonably secure `rpcpassword` can be gene
 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
 ```
 
-verus窗口：
+verus窗口：---------------------------------------------------------------------------------
 Edit `~/.komodo/VRSC/VRSC.conf` and include the parameters listed below, adapt the ones that need adaption.
-
+```bash
+nano ~/.komodo/VRSC/VRSC.conf
+```
 ```conf
 ##
 ## default recommended pool wallet config for verus/s-nomp
