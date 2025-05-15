@@ -9,8 +9,8 @@ A VPS with 8GB of RAM, anything above 30GB **SSD** storage and 1 CPU core which 
 
 ```bash
 lscpu|grep -i "model name"
-Model name:            QEMU Virtual CPU version 2.5+
 ```
+Model name:            QEMU Virtual CPU version 2.5+
 
 Basically, anything in there that is not a real CPU name _may_ cause NodeJS to behave funny despite the `Virtual CPU` having all necessary CPU flags. Be aware and ready to switch servers and/or hosting companies if need be. Start following the guide while logged in as `root`.
 
@@ -20,15 +20,15 @@ Basically, anything in there that is not a real CPU name _may_ cause NodeJS to b
 useradd -m -d /home/verus -s /bin/bash verus
 ```
 ```bash
+useradd -m -d /home/pool -s /bin/bash pool
+```
+```bash
 visudo
 ```
 ```bash
 %sudo   ALL=(ALL:ALL) NOPASSWD:ALL
 verus ALL=(ALL:ALL) NOPASSWD:ALL
 pool ALL=(ALL:ALL) NOPASSWD:ALL
-```
-```bash
-useradd -m -d /home/pool -s /bin/bash pool
 ```
 ```bash
 passwd pool
