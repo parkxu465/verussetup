@@ -85,15 +85,15 @@ sudo apt install jq
 ```bash
 ./auto-verus.sh
 ```
-新开root登录窗口，建输出目录--------------------------------------------------------------------------
-```bash
-mkdir /home/verus/export
-```
 
 When the script asks if this is a new installation, answer with `Y` (default). On `Enter blockchain data directory or leave blank for default:` press enter. On the question to install, answered with `1` (default).
 If you installed the updates and prerequisites, the daemon will start in the background.
 Check if it indeed started using `tail -f ~/.komodo/VRSC/debug.log` (`CTRL-C` to exit).
 
+新开root登录窗口，建输出目录--------------------------------------------------------------------------
+```bash
+mkdir /home/verus/export
+```
 Now, let's create the wallet export directory.
 
 # ```bash
