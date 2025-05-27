@@ -480,8 +480,18 @@ First of all, copy the following files from your running S-NOMP pool server and 
 * `/home/pool/s-nomp/coins/vrsc.json`
 * `/home/pool/s-nomp/pool_configs/verus.json`
 * optional if you use the `blocknotify` binary: `/home/pool/s-nomp/scripts/blocknotify`
+
 切换到pool用户-----------------------------------------------------------------------------------------------------------------
 Now, switch to the `pool` account. First, check if the access rights to `/home/pool/s-nomp/config.json` are `pool:pool`.
+
+```bash
+cp config_example.json config.json
+```
+```bash
+nano config.json
+```
+
+
 Then edit the file to reflect the changes listed below. Obviously fill in the correct IP for your S-NOMP server.
 * `    "website": {`
 * `        "enabled": false,`
