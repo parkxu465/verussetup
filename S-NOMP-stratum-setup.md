@@ -620,7 +620,8 @@ pm2 restart pool
 Edit your crontab using `crontab -e` and shove in this line at the bottom:
 
 ```crontab
-@reboot /bin/sleep 300 && cd /home/pool/s-nomp && /usr/bin/pm2 start init.js --name veruspool
+
+@reboot /bin/sleep 300 && cd /home/pool/s-nomp && pm2 start init.js --name veruspool
 ```
 
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
