@@ -585,11 +585,7 @@ pm2 log
 ```bash
 cd blake2b
 npm install
-```
-```bash
 npm link
-```
-```bash
 cd ..
 npm link blake2b
 ```
