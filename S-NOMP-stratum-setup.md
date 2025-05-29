@@ -14,15 +14,11 @@ Model name:            QEMU Virtual CPU version 2.5+
 
 Basically, anything in there that is not a real CPU name _may_ cause NodeJS to behave funny despite the `Virtual CPU` having all necessary CPU flags. Be aware and ready to switch servers and/or hosting companies if need be. Start following the guide while logged in as `root`.
 
-## 创建用户
+## 创建用户 root---------------------------------------------------------------------------------------------------
 
 ```bash
 useradd -m -d /home/verus -s /bin/bash verus
-```
-```bash
 useradd -m -d /home/pool -s /bin/bash pool
-```
-```bash
 visudo
 ```
 ```bash
@@ -39,21 +35,14 @@ passwd verus
 
 ## Operating System
 
-root执行：This guide is tailored to and tested on `Debian 11 "Bullseye"` but should probably also work on Debian-ish derivatives like `Devuan` or `Ubuntu` and others. Before starting, please install the latest updates and prerequisites.
+root执行：----------------------------------------------------------------------------------------------
+This guide is tailored to and tested on `Debian 11 "Bullseye"` but should probably also work on Debian-ish derivatives like `Devuan` or `Ubuntu` and others. Before starting, please install the latest updates and prerequisites.
 
 ```bash
 echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/keydb.list
-```
-```bash
 wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
-```
-```bash
 apt update
-```
-```bash
 apt -y upgrade
-```
-```bash
 apt -y install libgomp1 git libboost-all-dev libsodium-dev build-essential
 ```
 
@@ -69,36 +58,25 @@ Download the **latest** (`v0.9.3` used in this example) Verus binaries from the 
 
 ```bash
 mkdir ~/bin
-```
-```bash
 cd ~/bin
-```
-```bash
 wget https://raw.githubusercontent.com/Oink70/Verus-CLI-tools/main/auto-verus.sh
-```
-```bash
 chmod +x auto-verus.sh
-```
-```bash
 sudo apt install jq
-```
-```bash
 ./auto-verus.sh
 ```
 
 When the script asks if this is a new installation, answer with `Y` (default). On `Enter blockchain data directory or leave blank for default:` press enter. On the question to install, answered with `1` (default).
 If you installed the updates and prerequisites, the daemon will start in the background.
 Check if it indeed started using `tail -f ~/.komodo/VRSC/debug.log` (`CTRL-C` to exit).
+```bash
+tail -f ~/.komodo/VRSC/debug.log
+```
+
 
 新开root登录窗口，建输出目录--------------------------------------------------------------------------
 ```bash
 mkdir /home/verus/export
 ```
-Now, let's create the wallet export directory.
-
-# ```bash
-# mkdir ~/export
-# ```
 
 root窗口：
 It's time to do the wallet config. A reasonably secure `rpcpassword` can be generated using this command:   
@@ -107,7 +85,8 @@ It's time to do the wallet config. A reasonably secure `rpcpassword` can be gene
 cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
 ```
 
-verus窗口：---------------------------------------------------------------------------------
+verus窗口：------------------------------------------------------------------------------------------
+
 Edit `~/.komodo/VRSC/VRSC.conf` and include the parameters listed below, adapt the ones that need adaption.
 ```bash
 nano ~/.komodo/VRSC/VRSC.conf
@@ -228,7 +207,7 @@ Press `ctrl-c` to exit `tail` if it looks alright. To check the status and know 
 verus getinfo
 ```
 
-root窗口：
+root窗口：--------------------------------------------------------------------------------------------------
 When it has synced up to height, the `blocks` and `longestchain` values will be at par. Additionally, you should verify against [the explorer](https://explorer.veruscoin.io) that you are not on a fork. Edit the `crontab` using `crontab -e` and include the line below to autostart the poolwallet:
 ```bash
 crontab -e
@@ -239,7 +218,7 @@ crontab -e
 @reboot cd /home/verus/.komodo/VRSC; /home/verus/bin/verusd -daemon 1>/dev/null 2>&1
 ```
 **HINT:** if you can't stand `vi`, do `EDITOR=nano crontab -e` ;-)
-root窗口：
+root窗口：--------------------------------------------------------------------------------------------
 Create a `start-daemon` script:
 ```bash
 cat << EOX >> /home/verus/bin/start-daemon
@@ -254,8 +233,6 @@ EOX
 ```
 ```bash
 chmod +x /home/verus/bin/start-daemon
-```
-```bash
 cp /home/verus/bin/start-daemon /home/verus/bin/restart-daemon
 ```
 ```bash
@@ -295,28 +272,19 @@ chmod +x /home/verus/bin/restart-daemon
 ```
 
 ## Server performance settings
-root 窗口：
+root 窗口：-------------------------------------------------------------------------------------------------
 Set amount of connections to 1024 (or 65535 if you think you need it) instead of the standard 128:
+And use the following command to activate it immediately
+Set the overcommit_memory feature to 1, to avoid loss of data in case of not enough memory:
+**NOTE:** Be aware that you may have to install the POSIX module (as pool user in the `~/s-nomp` directory: `npm install posix`)
+And use the following command to activate it immediately
 
 ```bash
 echo 'net.core.somaxconn = 1024' >> /etc/sysctl.conf
-```
-And use the following command to activate it immediately
-```bash
 sysctl net.core.somaxconn=1024
-```
-**NOTE:** Be aware that you may have to install the POSIX module (as pool user in the `~/s-nomp` directory: `npm install posix`)
-
-
-Set the overcommit_memory feature to 1, to avoid loss of data in case of not enough memory:
-```bash
 echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
-```
-And use the following command to activate it immediately
-```bash
 sysctl vm.overcommit_memory=1
 ```
-
 Finally disable Transparent Huge Page:
 ```bash
 nano /etc/default/grub.d/no_thp.cfg
@@ -329,10 +297,10 @@ Update `GRUB` and reboot.
 ```bash
 update-grub
 ```
-# ```bash
-# shutdown -r now
-# ```
-# Wait for the reboot to finish and log back in as `root`.
+```bash
+shutdown -r now
+```
+# Wait for the reboot to finish and log back in as `root`---------------------------------------------.
 安装redis:
 ```bash
 apt -y install redis-server
