@@ -413,7 +413,7 @@ Make sure you're in the `pool` account and clone the S-NOMP from our main reposi
 su - pool
 ```
 ```bash
-git clone https://github.com/veruscoin/s-nomp
+git clone https://github.com/s-nomp/s-nomp
 ```
 ```bash
 cd s-nomp
@@ -436,33 +436,21 @@ git clone https://github.com/mafintosh/blake2b-wasm.git
 ```bash
 cd blake2b-wasm
 npm install
-```
-```bash
 npm link
-```
-```bash
 cd ..
 npm link blake2b-wasm
 ```
 ```bash
 cd blake2b
 npm install
-```
-```bash
 npm link
-```
-```bash
 cd ..
 npm link blake2b
 ```
 ```bash
 cd b4a
 npm install
-```
-```bash
 npm link
-```
-```bash
 cd ..
 npm link b4a
 ```
