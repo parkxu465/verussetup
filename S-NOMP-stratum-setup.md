@@ -639,7 +639,15 @@ ufw allow from any to any port 22 comment "SSH access"
 ```
 If you want to limit the IPs that can access your server over SSH (eg, if you have a fixed IP address or use a SSH-jump server) replace the first `any` with the IP or ip-range. doublecheck this or you will lock yourself out!
 ```bash
-ufw allow from any to any port 80,443 comment "Standard web ports"
+ufw allow from any to any port 80 comment "Standard web ports"
+```
+```bash
+ufw allow from any to any port 8080 comment "Standard web ports"
+```
+```bash
+ufw allow from any to any port 443 comment "Standard web ports"
+```
+```bash
 ufw allow from any to any port 9999 comment "mining port(s)"
 ```
 add multiple mining ports by separating them by commas, analogue to the web ports.
