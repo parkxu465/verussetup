@@ -439,15 +439,11 @@ npm install
 npm link
 cd ..
 npm link blake2b-wasm
-```
-```bash
 cd blake2b
 npm install
 npm link
 cd ..
 npm link blake2b
-```
-```bash
 cd b4a
 npm install
 npm link
@@ -578,6 +574,10 @@ pm2 start init.js --name pool
 ```
 
 Use `pm2 log` to check for S-NOMP startup errors.
+```bash
+pm2 log
+```
+
 
 **warning**: if you have SSL enabled on your public pool, you either need the SSL certificates in the same location on your stratum server or disable any SSL ports in the `/home/pool/s-nomp/pool_configs/verus.json` file
 
