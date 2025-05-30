@@ -62,6 +62,8 @@ cd ~/bin
 wget https://raw.githubusercontent.com/Oink70/Verus-CLI-tools/main/auto-verus.sh
 chmod +x auto-verus.sh
 sudo apt install jq
+```
+```bash
 ./auto-verus.sh
 ```
 
