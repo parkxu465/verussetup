@@ -73,7 +73,9 @@ Check if it indeed started using `tail -f ~/.komodo/VRSC/debug.log` (`CTRL-C` to
 ```bash
 tail -f ~/.komodo/VRSC/debug.log
 ```
-
+```bash
+venus stop
+```
 
 新开root登录窗口，建输出目录--------------------------------------------------------------------------
 ```bash
